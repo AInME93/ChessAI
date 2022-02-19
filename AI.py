@@ -14,15 +14,17 @@ def random_move(board):
         return random.choice(moves)
 
 
-def evaluate(board, maximizing_color):
+def evaluate(board, max_agent):
     """
     Provides a number representing the value of the board at a given state
     :param board: the current board being used for the game (Board)
     :param maximizing_color: color associated with maximizing player (tuple)
     :return: integer representing boards value
     """
-    pass    # YOUR CODE GOES HERE # DELETE THIS LINE #
-
+    if max_agent == WHITE:
+        return board.whiteScore - board.blackScore
+    else:
+        return board.blackScore - board.whiteScore
 
 def minimax(board, depth, alpha, beta, maximizing_player, maximizing_color):
     """
@@ -35,4 +37,9 @@ def minimax(board, depth, alpha, beta, maximizing_player, maximizing_color):
     :param maximizing_color: color of the AI using this function to determine a move (tuple)
     :return: tuple representing move and eval; format: (move, eval)
     """
-    pass    # YOUR CODE GOES HERE # DELETE THIS LINE #
+
+    if depth == 0 or board.gameover:
+        return None, evaluate(board, max_agent)
+    
+    moves = board.get_moves()
+    best_move = random.choice(moves)

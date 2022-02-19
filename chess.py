@@ -95,21 +95,29 @@ class Game:
         :return: None
         """
         theme = pygame_menu.themes.Theme(title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_NONE,
-                                         menubar_close_button=False,
+                                        #  menubar_close_button=False,
                                          widget_font_color=SMALL_TEXT_COLOR,
                                          background_color=BG_COLOR,
                                          widget_font=pygame_menu.font.FONT_OPEN_SANS_BOLD,
                                          cursor_color=WHITE)
 
-        menu = pygame_menu.Menu(height=SCREEN_HEIGHT, width=SCREEN_WIDTH, title="", theme=theme, menu_position=(50, 0))
-        menu.add_label("ChessAI", align=pygame_menu.locals.ALIGN_CENTER, font_name=pygame_menu.font.FONT_OPEN_SANS_BOLD,
+        menu = pygame_menu.Menu(height=SCREEN_HEIGHT, width=SCREEN_WIDTH, title="", theme=theme)
+        
+        menu.add.label("ChessAI", align=pygame_menu.locals.ALIGN_CENTER, font_name=pygame_menu.font.FONT_OPEN_SANS_BOLD,
                        font_color=LARGE_TEXT_COLOR, font_size=90, margin=(0, 50))
-        menu.add_text_input('Name : ', default=self.p1_name, maxchar=10, onchange=self.set_name)
-        menu.add_selector('Color : ', [('White', WHITE), ('Black', BLACK)], onchange=self.set_color)
-        menu.add_selector('AI : ', [('Minimax', 1), ('Random', 2)], onchange=self.set_ai)
-        menu.add_button('Play', self.game_screen)
-        menu.add_button('Quit', pygame_menu.events.EXIT)
-        menu.add_label("", align=pygame_menu.locals.ALIGN_CENTER, font_color=BLACK, font_size=70, margin=(0, 50))
+
+        menu.add.text_input('Name : ', default=self.p1_name, maxchar=10, onchange=self.set_name)
+
+        menu.add.selector('Color : ', [('White', WHITE), ('Black', BLACK)], onchange=self.set_color)
+
+        menu.add.selector('AI : ', [('Minimax', 1), ('Random', 2)], onchange=self.set_ai)
+
+        menu.add.button('Play', self.game_screen)
+
+        menu.add.button('Quit', pygame_menu.events.EXIT)
+
+        menu.add.label("", align=pygame_menu.locals.ALIGN_CENTER, font_color=BLACK, font_size=70, margin=(0, 50))
+
         menu.center_content()
 
         # Keeps track of whether menu screen should keep running or stop
@@ -133,7 +141,7 @@ class Game:
         """
         # Determine move based on selected AI
         if self.p2_name == "Minimax":
-            self.ai_move.put(AI.minimax(self.board.copy(), 3, inf, -inf, True, self.p2_color)[0])
+            self.ai_move.put( AI.minimax(self.board.copy(), 3, inf, -inf, True, self.p2_color) [0])
         else:
             self.ai_move.put(AI.random_move(self.board))
 
