@@ -26,7 +26,7 @@ def evaluate(board, max_agent):
     else:
         return board.blackScore - board.whiteScore
 
-def minimax(board, depth, alpha, beta, maximizing_player, maximizing_color):
+def minimax(board, depth, alpha, beta, min_agent, max_agent):
     """
     Minimax algorithm used to find best move for the AI
     :param board: the current board being used for the game (Board)
@@ -43,3 +43,30 @@ def minimax(board, depth, alpha, beta, maximizing_player, maximizing_color):
     
     moves = board.get_moves()
     best_move = random.choice(moves)
+
+    if min_agent:
+        max_eval = -inf
+        for move in moves:
+            board.make_move(move[0], move[1])
+            current_eval = minimax(board,depth-1,alpha,beta,False,max_agent)[1]
+            board.unmake_move()
+
+            if current_eval > max_eval:
+                max_eval = current_eval
+                best_move = move
+            
+        return best_move, max_eval
+
+    else:
+        min_eval = inf
+        for move in moves:
+            board.make_move(move[0], move[1])
+            current_eval = minimax(board, depth-1, alpha, beta, True, max_agent)[1]
+            board.unmake_move()
+
+            if current_eval < min_eval:
+                min_eval = current_eval
+                best_move = move
+
+        return best_move, min_eval
+
