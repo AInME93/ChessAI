@@ -55,6 +55,13 @@ def minimax(board, depth, alpha, beta, min_agent, max_agent):
                 max_eval = current_eval
                 best_move = move
             
+            # Prune unnecessary branches
+
+            alpha = max(alpha, current_eval)
+            if beta <= alpha:
+                break
+
+
         return best_move, max_eval
 
     else:
@@ -67,6 +74,12 @@ def minimax(board, depth, alpha, beta, min_agent, max_agent):
             if current_eval < min_eval:
                 min_eval = current_eval
                 best_move = move
+
+            # Prune unnecessary branches
+
+            beta = min(beta, current_eval)
+            if beta <= alpha:
+                break
 
         return best_move, min_eval
 
